@@ -14,16 +14,12 @@ struct Cell {
 }
 
 impl Cell {
-    //  Empty const used for array initialization
-    const NEW: Self = Self::new();
-
-    const SCALE: i16 = 15;
-
-    const fn new() -> Self {
+    fn new() -> Self {
         Self { entropy: BTreeSet::new() }
     }
 
     fn draw(&self, draw: &Draw) {
+        let scale = 15;
         match self.entropy.len() {
             1 => {
                 let s = self.entropy.first().unwrap().to_string();
@@ -33,8 +29,8 @@ impl Cell {
                 for i in 1..=9 {
                     let j = (i as i16);
                     if let Some(num) = self.entropy.get(&i) {
-                        let x = (j - 1) % 3 * Self::SCALE;
-                        let y = -(j - 1) / 3 * Self::SCALE;
+                        let x = (j - 1) % 3 * scale;
+                        let y = -(j - 1) / 3 * scale;
                         draw.text(&i.to_string()).x_y(x as f32, y as f32);
                     }
                 }
@@ -55,14 +51,7 @@ struct Model {
 }
 
 fn model(_app: &App) -> Model {
-    let mut big: [Cell; 81] = [Cell::NEW; 81];
-    for i in 0..81 {
-        big[i] = Cell::default();
-    }
-    let model: [[Cell; 9]; 9];
-    unsafe {
-        model = std::mem::transmute(big);
-    }
+    let model: [[Cell; 9]; 9] = Default::default();
     Model {
         state: model,
     }
