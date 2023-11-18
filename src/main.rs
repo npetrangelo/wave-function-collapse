@@ -74,9 +74,8 @@ fn update(_app: &App, _model: &mut Model, _update: Update) {
 fn view(app: &App, _model: &Model, frame: Frame) {
     let draw = app.draw();
     draw.background().color(BLACK);
-    let mut cell = Cell::default();
-    cell.entropy.remove(&1);
-    cell.entropy.remove(&8);
+    let mut cell = Cell::new();
+    cell.entropy.insert(1);
     cell.draw(&draw);
     draw.to_frame(app, &frame).unwrap();
 }
