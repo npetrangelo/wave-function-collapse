@@ -27,7 +27,7 @@ impl Cell {
             },
             2..=9 => {
                 for i in 1..=9 {
-                    let j = (i as i16);
+                    let j = i as i16;
                     if let Some(num) = self.entropy.get(&i) {
                         let x = (j - 1) % 3 * scale;
                         let y = -(j - 1) / 3 * scale;
@@ -61,7 +61,42 @@ fn model(app: &App) -> Model {
 
 fn key_pressed(_app: &App, model: &mut Model, key: Key) {
     match key {
-        Key::Key1 => println!("Key 1 hit"),
+        Key::Key1 => {
+            model.state[0][0].entropy.remove(&1);
+            println!("Key 1 hit");
+        },
+        Key::Key2 => {
+            model.state[0][0].entropy.remove(&2);
+            println!("Key 2 hit");
+        },
+        Key::Key3 => {
+            model.state[0][0].entropy.remove(&3);
+            println!("Key 2 hit");
+        },
+        Key::Key4 => {
+            model.state[0][0].entropy.remove(&4);
+            println!("Key 2 hit");
+        },
+        Key::Key5 => {
+            model.state[0][0].entropy.remove(&5);
+            println!("Key 2 hit");
+        },
+        Key::Key6 => {
+            model.state[0][0].entropy.remove(&6);
+            println!("Key 2 hit");
+        },
+        Key::Key7 => {
+            model.state[0][0].entropy.remove(&7);
+            println!("Key 2 hit");
+        },
+        Key::Key8 => {
+            model.state[0][0].entropy.remove(&8);
+            println!("Key 2 hit");
+        },
+        Key::Key9 => {
+            model.state[0][0].entropy.remove(&9);
+            println!("Key 2 hit");
+        },
         _ => {}
     }
 }
@@ -71,11 +106,9 @@ fn update(_app: &App, _model: &mut Model, _update: Update) {
     // todo!("Draw stateful sudoku grid");
 }
 
-fn view(app: &App, _model: &Model, frame: Frame) {
+fn view(app: &App, model: &Model, frame: Frame) {
     let draw = app.draw();
     draw.background().color(BLACK);
-    let mut cell = Cell::new();
-    cell.entropy.insert(1);
-    cell.draw(&draw);
+    model.state[0][0].draw(&draw);
     draw.to_frame(app, &frame).unwrap();
 }
