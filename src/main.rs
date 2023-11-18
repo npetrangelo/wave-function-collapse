@@ -10,15 +10,37 @@ fn main() {
 
 #[derive(Clone, Debug)]
 struct Cell {
-    entropy: BTreeSet<i8>,
+    entropy: BTreeSet<u8>,
 }
 
 impl Cell {
     //  Empty const used for array initialization
     const NEW: Self = Self::new();
 
+    const SCALE: i16 = 15;
+
     const fn new() -> Self {
         Self { entropy: BTreeSet::new() }
+    }
+
+    fn draw(&self, draw: &Draw) {
+        match self.entropy.len() {
+            1 => {
+                let s = self.entropy.first().unwrap().to_string();
+                draw.text(&s).font_size(24);
+            },
+            2..=9 => {
+                for i in 1..=9 {
+                    let j = (i as i16);
+                    if let Some(num) = self.entropy.get(&i) {
+                        let x = (j - 1) % 3 * Self::SCALE;
+                        let y = -(j - 1) / 3 * Self::SCALE;
+                        draw.text(&i.to_string()).x_y(x as f32, y as f32);
+                    }
+                }
+            }
+            _ => panic!("Entropy should not be empty or over 10 elements"),
+        }
     }
 }
 
@@ -54,5 +76,9 @@ fn update(_app: &App, _model: &mut Model, _update: Update) {
 fn view(app: &App, _model: &Model, frame: Frame) {
     let draw = app.draw();
     draw.background().color(BLACK);
+    let mut cell = Cell::default();
+    cell.entropy.remove(&1);
+    cell.entropy.remove(&8);
+    cell.draw(&draw);
     draw.to_frame(app, &frame).unwrap();
 }
