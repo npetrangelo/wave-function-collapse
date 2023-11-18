@@ -51,8 +51,19 @@ struct Model {
     state: [[Cell; 9]; 9],
 }
 
-fn model(_app: &App) -> Model {
+fn model(app: &App) -> Model {
+    let _window = app.new_window()
+        .key_pressed(key_pressed)
+        .build()
+        .unwrap();
     Model::default()
+}
+
+fn key_pressed(_app: &App, model: &mut Model, key: Key) {
+    match key {
+        Key::Key1 => println!("Key 1 hit"),
+        _ => {}
+    }
 }
 
 fn update(_app: &App, _model: &mut Model, _update: Update) {
