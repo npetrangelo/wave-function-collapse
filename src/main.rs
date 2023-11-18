@@ -46,15 +46,13 @@ impl Default for Cell {
     }
 }
 
+#[derive(Default)]
 struct Model {
     state: [[Cell; 9]; 9],
 }
 
 fn model(_app: &App) -> Model {
-    let model: [[Cell; 9]; 9] = Default::default();
-    Model {
-        state: model,
-    }
+    Model::default()
 }
 
 fn update(_app: &App, _model: &mut Model, _update: Update) {
