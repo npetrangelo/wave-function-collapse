@@ -33,7 +33,7 @@ impl Cell {
         match self.entropy.len() {
             1 => {
                 let s = self.entropy.first().unwrap().to_string();
-                draw.text(&s).font_size(24);
+                draw.text(&s).font_size(32);
             },
             2..=9 => {
                 for i in 1..=9 {
