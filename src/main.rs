@@ -19,6 +19,15 @@ impl Cell {
     }
 
     fn draw(&self, draw: &Draw) {
+        // left
+        draw.line().start(pt2(-30.0, -30.0)).end(pt2(-30.0, 30.0)).weight(3.0).color(WHITE);
+        // right
+        draw.line().start(pt2(30.0, -30.0)).end(pt2(30.0, 30.0)).weight(3.0).color(WHITE);
+        // bottom
+        draw.line().start(pt2(-30.0, -30.0)).end(pt2(30.0, -30.0)).weight(3.0).color(WHITE);
+        // top
+        draw.line().start(pt2(30.0, 30.0)).end(pt2(-30.0, 30.0)).weight(3.0).color(WHITE);
+
         let scale = 15;
         match self.entropy.len() {
             1 => {
