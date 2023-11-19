@@ -120,6 +120,6 @@ fn update(_app: &App, _model: &mut Model, _update: Update) {
 fn view(app: &App, model: &Model, frame: Frame) {
     let draw = app.draw();
     draw.background().color(BLACK);
-    model.state[0][0].draw(&draw);
+    model.state[0][0].draw(&draw.x_y(0.0, 0.0));
     draw.to_frame(app, &frame).unwrap();
 }
