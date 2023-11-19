@@ -25,43 +25,17 @@ fn model(app: &App) -> Model {
 }
 
 fn key_pressed(_app: &App, model: &mut Model, key: Key) {
+    println!("{:?}", key);
     match key {
-        Key::Key1 => {
-            model.state[0][0].collapse(&1);
-            println!("Key 1 hit");
-        },
-        Key::Key2 => {
-            model.state[0][0].collapse(&2);
-            println!("Key 2 hit");
-        },
-        Key::Key3 => {
-            model.state[0][0].collapse(&3);
-            println!("Key 3 hit");
-        },
-        Key::Key4 => {
-            model.state[0][0].collapse(&4);
-            println!("Key 4 hit");
-        },
-        Key::Key5 => {
-            model.state[0][0].collapse(&5);
-            println!("Key 5 hit");
-        },
-        Key::Key6 => {
-            model.state[0][0].collapse(&6);
-            println!("Key 6 hit");
-        },
-        Key::Key7 => {
-            model.state[0][0].collapse(&7);
-            println!("Key 7 hit");
-        },
-        Key::Key8 => {
-            model.state[0][0].collapse(&8);
-            println!("Key 8 hit");
-        },
-        Key::Key9 => {
-            model.state[0][0].collapse(&9);
-            println!("Key 9 hit");
-        },
+        Key::Key1 => model.state[0][0].collapse(&1),
+        Key::Key2 => model.state[0][0].collapse(&2),
+        Key::Key3 => model.state[0][0].collapse(&3),
+        Key::Key4 => model.state[0][0].collapse(&4),
+        Key::Key5 => model.state[0][0].collapse(&5),
+        Key::Key6 => model.state[0][0].collapse(&6),
+        Key::Key7 => model.state[0][0].collapse(&7),
+        Key::Key8 => model.state[0][0].collapse(&8),
+        Key::Key9 => model.state[0][0].collapse(&9),
         _ => {}
     }
 }
