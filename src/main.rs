@@ -4,7 +4,7 @@ use nannou::prelude::*;
 fn main() {
     nannou::app(model)
         .update(update)
-        .simple_window(view)
+        .loop_mode(LoopMode::wait())
         .run();
 }
 
@@ -62,6 +62,7 @@ struct Model {
 
 fn model(app: &App) -> Model {
     let _window = app.new_window()
+        .view(view)
         .key_pressed(key_pressed)
         .build()
         .unwrap();
