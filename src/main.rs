@@ -11,23 +11,18 @@ fn main() {
 }
 
 #[derive(Default)]
-struct Grid {
-    state: [[Cell; 9]; 9],
-}
-
-#[derive(Default)]
 struct Model {
-    grid: Grid,
+    grid: [[Cell; 9]; 9],
     selected: (usize, usize),
 }
 
 impl Model {
     fn selected(&self) -> &Cell {
-        &self.grid.state[self.selected.0][self.selected.1]
+        &self.grid[self.selected.0][self.selected.1]
     }
 
     fn selected_mut(&mut self) -> &mut Cell {
-        &mut self.grid.state[self.selected.0][self.selected.1]
+        &mut self.grid[self.selected.0][self.selected.1]
     }
 
     fn select(&mut self, x: usize, y: usize) -> &mut Cell {
