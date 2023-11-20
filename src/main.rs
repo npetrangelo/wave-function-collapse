@@ -10,6 +10,10 @@ fn main() {
         .run();
 }
 
+trait Drawable {
+    fn draw(&self, draw: &Draw);
+}
+
 #[derive(Default)]
 struct Model {
     grid: [[Cell; 9]; 9],

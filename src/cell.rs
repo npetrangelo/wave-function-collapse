@@ -1,5 +1,6 @@
 use std::collections::BTreeSet;
 use nannou::prelude::*;
+use crate::Drawable;
 
 #[derive(Clone, Debug)]
 pub struct Cell {
@@ -16,8 +17,16 @@ impl Cell {
             self.entropy.remove(value);
         }
     }
+}
 
-    pub fn draw(&self, draw: &Draw) {
+impl Default for Cell {
+    fn default() -> Self {
+        Self { entropy: (1..=9).collect() }
+    }
+}
+
+impl Drawable for Cell {
+    fn draw(&self, draw: &Draw) {
         let r = 30.0;
         let w = 1.0;
         // left
@@ -47,11 +56,5 @@ impl Cell {
             }
             _ => panic!("Entropy should not be empty or over 10 elements"),
         }
-    }
-}
-
-impl Default for Cell {
-    fn default() -> Self {
-        Self { entropy: (1..=9).collect() }
     }
 }
