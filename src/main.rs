@@ -15,44 +15,49 @@ struct Grid {
     state: [[Cell; 9]; 9],
 }
 
-struct Model<'a> {
+#[derive(Default)]
+struct Model {
     grid: Grid,
-    selected: &'a mut Cell,
+    selected: (usize, usize),
 }
 
-impl<'a> Model<'a> {
-    fn select(&'a mut self, x: usize, y: usize) {
-        self.selected = &mut self.grid.state[x][y];
+impl Model {
+    fn selected(&mut self) -> &Cell {
+        &self.grid.state[self.selected.0][self.selected.1]
+    }
+
+    fn selected_mut(&mut self) -> &mut Cell {
+        &mut self.grid.state[self.selected.0][self.selected.1]
+    }
+
+    fn select(&mut self, x: usize, y: usize) -> &mut Cell {
+        self.selected = (x, y);
+        self.selected_mut()
     }
 }
 
-fn model(app: &App) -> Model<'static> {
+fn model(app: &App) -> Model {
     let _window = app.new_window()
         .view(view)
         .key_pressed(key_pressed)
         .build()
         .unwrap();
-    let mut grid = Grid::default();
-    let mut model = Model {
-        grid,
-        selected: &mut Cell::default(),
-    };
-    model.select(0, 0);
-    model
+    Model::default()
 }
 
 fn key_pressed(_app: &App, model: &mut Model, key: Key) {
     println!("{:?}", key);
+    let selected = model.selected_mut();
     match key {
-        Key::Key1 => model.selected.collapse(&1),
-        Key::Key2 => model.selected.collapse(&2),
-        Key::Key3 => model.selected.collapse(&3),
-        Key::Key4 => model.selected.collapse(&4),
-        Key::Key5 => model.selected.collapse(&5),
-        Key::Key6 => model.selected.collapse(&6),
-        Key::Key7 => model.selected.collapse(&7),
-        Key::Key8 => model.selected.collapse(&8),
-        Key::Key9 => model.selected.collapse(&9),
+        Key::Key1 => selected.collapse(&1),
+        Key::Key2 => selected.collapse(&2),
+        Key::Key3 => selected.collapse(&3),
+        Key::Key4 => selected.collapse(&4),
+        Key::Key5 => selected.collapse(&5),
+        Key::Key6 => selected.collapse(&6),
+        Key::Key7 => selected.collapse(&7),
+        Key::Key8 => selected.collapse(&8),
+        Key::Key9 => selected.collapse(&9),
         _ => {}
     }
 }
