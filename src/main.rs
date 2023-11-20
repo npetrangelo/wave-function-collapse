@@ -59,7 +59,7 @@ fn key_pressed(_app: &App, model: &mut Model, key: Key) {
         Key::Key8 => selected.collapse(&8),
         Key::Key9 => selected.collapse(&9),
         _ => {}
-    }
+    };
 }
 
 fn update(_app: &App, _model: &mut Model, _update: Update) {

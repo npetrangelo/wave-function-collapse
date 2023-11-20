@@ -41,7 +41,7 @@ impl Cell {
                     if let Some(num) = self.entropy.get(&i) {
                         let x = ((j - 1) % 3 - 1) * scale;
                         let y = -((j - 1) / 3 - 1) * scale;
-                        draw.text(&i.to_string()).x_y(x as f32, y as f32);
+                        draw.text(&num.to_string()).x_y(x as f32, y as f32);
                     }
                 }
             }
