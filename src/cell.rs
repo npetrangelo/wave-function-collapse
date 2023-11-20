@@ -32,7 +32,7 @@ impl Cell {
         let scale = 15;
         match self.entropy.len() {
             1 => {
-                let s = self.entropy.first().unwrap().to_string();
+                let s = self.entropy.first().expect("length is one").to_string();
                 draw.text(&s).font_size(32);
             },
             2..=9 => {
