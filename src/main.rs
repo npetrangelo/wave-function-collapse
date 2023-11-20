@@ -22,7 +22,7 @@ struct Model {
 }
 
 impl Model {
-    fn selected(&mut self) -> &Cell {
+    fn selected(&self) -> &Cell {
         &self.grid.state[self.selected.0][self.selected.1]
     }
 
@@ -70,6 +70,6 @@ fn update(_app: &App, _model: &mut Model, _update: Update) {
 fn view(app: &App, model: &Model, frame: Frame) {
     let draw = app.draw();
     draw.background().color(BLACK);
-    model.grid.state[0][0].draw(&draw.x_y(0.0, 0.0));
+    model.selected().draw(&draw.x_y(0.0, 0.0));
     draw.to_frame(app, &frame).unwrap();
 }
