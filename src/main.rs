@@ -35,6 +35,7 @@ fn model(app: &App) -> Model {
     let _window = app.new_window()
         .view(view)
         .key_pressed(key_pressed)
+        .mouse_pressed(mouse_pressed)
         .build()
         .unwrap();
     Model::default()
@@ -55,6 +56,11 @@ fn key_pressed(_app: &App, model: &mut Model, key: Key) {
         Key::Key9 => selected.collapse(&9),
         _ => {}
     };
+}
+
+fn mouse_pressed(app: &App, model: &mut Model, button: MouseButton) {
+    // todo!("Use app.mouse.position() to know where the mouse is");
+    // todo!("Select cell");
 }
 
 fn update(_app: &App, _model: &mut Model, _update: Update) {
