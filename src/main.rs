@@ -61,6 +61,7 @@ fn key_pressed(_app: &App, model: &mut Model, key: Key) {
 fn mouse_pressed(app: &App, model: &mut Model, button: MouseButton) {
     // todo!("Use app.mouse.position() to know where the mouse is");
     // todo!("Select cell");
+    println!("{:?}", button);
 }
 
 fn update(_app: &App, _model: &mut Model, _update: Update) {
