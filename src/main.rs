@@ -14,13 +14,12 @@ trait Drawable {
     fn draw(&self, draw: &Draw);
 }
 
-trait Selectable {
-    type Params;
+trait Selectable<T> {
     type Selection;
 
-    fn select(&mut self, params: Self::Params) -> &mut Self::Selection;
-    fn selected(&self) -> &Self::Selection;
-    fn selected_mut(&mut self) -> &mut Self::Selection;
+    fn select(&mut self, selection: Self::Selection) -> &mut T;
+    fn selected(&self) -> &T;
+    fn selected_mut(&mut self) -> &mut T;
 }
 
 #[derive(Default)]
@@ -29,12 +28,11 @@ struct Model {
     selected: (usize, usize),
 }
 
-impl Selectable for Model {
-    type Params = (usize, usize);
-    type Selection = Cell;
+impl Selectable<Cell> for Model {
+    type Selection = (usize, usize);
 
-    fn select(&mut self, params: Self::Params) -> &mut Cell {
-        self.selected = params;
+    fn select(&mut self, selection: Self::Selection) -> &mut Cell {
+        self.selected = selection;
         self.selected_mut()
     }
 
