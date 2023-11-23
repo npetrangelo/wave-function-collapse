@@ -107,8 +107,8 @@ fn view(app: &App, model: &Model, frame: Frame) {
     for i in 0..4 {
         let outer = Cell::SIZE*4.5;
         let i = -outer + 3.0 * (i as f32) * Cell::SIZE;
-        draw.line().weight(5.0).color(WHITE).start(pt2(outer, i)).end(pt2(-outer, i));
-        draw.line().weight(5.0).color(WHITE).start(pt2(i, outer)).end(pt2(i, -outer));
+        draw.line().start(pt2(outer, i)).end(pt2(-outer, i)).weight(3.0).color(WHITE);
+        draw.line().start(pt2(i, outer)).end(pt2(i, -outer)).weight(3.0).color(WHITE);
     }
     draw.to_frame(app, &frame).unwrap();
 }
