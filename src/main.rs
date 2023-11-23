@@ -104,11 +104,26 @@ fn view(app: &App, model: &Model, frame: Frame) {
         }
     }
 
+    let outer = Cell::SIZE*4.5;
     for i in 0..4 {
-        let outer = Cell::SIZE*4.5;
         let i = -outer + 3.0 * (i as f32) * Cell::SIZE;
         draw.line().start(pt2(outer, i)).end(pt2(-outer, i)).weight(3.0).color(WHITE);
         draw.line().start(pt2(i, outer)).end(pt2(i, -outer)).weight(3.0).color(WHITE);
     }
+
+    let r = Cell::SIZE/2.0 + 5.0;
+    let w = 5.0;
+    let x = ((model.selected.0 as f32) - 4.0) * Cell::SIZE;
+    let y = ((model.selected.1 as f32) - 4.0) * Cell::SIZE;
+    let draw = draw.x_y(x, -y);
+    // left
+    draw.line().start(pt2(-r, -r)).end(pt2(-r, r)).weight(w).color(LIGHTGREEN);
+    // right
+    draw.line().start(pt2(r, r)).end(pt2(r, -r)).weight(w).color(LIGHTGREEN);
+    // bottom
+    draw.line().start(pt2(-r, -r)).end(pt2(r, -r)).weight(w).color(LIGHTGREEN);
+    // top
+    draw.line().start(pt2(r, r)).end(pt2(-r, r)).weight(w).color(LIGHTGREEN);
+
     draw.to_frame(app, &frame).unwrap();
 }
