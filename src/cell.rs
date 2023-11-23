@@ -2,7 +2,7 @@ use std::collections::BTreeSet;
 use nannou::prelude::*;
 use crate::Drawable;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct Cell {
     entropy: BTreeSet<u8>,
 }

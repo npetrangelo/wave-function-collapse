@@ -1,3 +1,4 @@
+use nalgebra::{Const, Dyn, MatrixViewMut, SMatrix};
 use nannou::prelude::*;
 use crate::cell::Cell;
 
@@ -17,31 +18,31 @@ trait Drawable {
 trait Selectable<T> {
     type Selection;
 
-    fn select(&mut self, selection: Self::Selection) -> &mut T;
-    fn selected(&self) -> &T;
-    fn selected_mut(&mut self) -> &mut T;
+    fn select(&mut self, selection: Self::Selection) -> Option<&mut T>;
+    fn selected(&self) -> Option<&T>;
+    fn selected_mut(&mut self) -> Option<&mut T>;
 }
 
 #[derive(Default)]
 struct Model {
-    grid: [[Cell; 9]; 9],
+    grid: SMatrix<Cell, 9, 9>,
     selected: (usize, usize),
 }
 
 impl Selectable<Cell> for Model {
     type Selection = (usize, usize);
 
-    fn select(&mut self, selection: Self::Selection) -> &mut Cell {
+    fn select(&mut self, selection: Self::Selection) -> Option<&mut Cell> {
         self.selected = selection;
         self.selected_mut()
     }
 
-    fn selected(&self) -> &Cell {
-        &self.grid[self.selected.0][self.selected.1]
+    fn selected(&self) -> Option<&Cell> {
+        self.grid.get(self.selected)
     }
 
-    fn selected_mut(&mut self) -> &mut Cell {
-        &mut self.grid[self.selected.0][self.selected.1]
+    fn selected_mut(&mut self) -> Option<&mut Cell> {
+        self.grid.get_mut(self.selected)
     }
 }
 
@@ -57,18 +58,19 @@ fn model(app: &App) -> Model {
 
 fn key_pressed(_app: &App, model: &mut Model, key: Key) {
     println!("{:?}", key);
-    let selected = model.selected_mut();
-    match key {
-        Key::Key1 => selected.collapse(&1),
-        Key::Key2 => selected.collapse(&2),
-        Key::Key3 => selected.collapse(&3),
-        Key::Key4 => selected.collapse(&4),
-        Key::Key5 => selected.collapse(&5),
-        Key::Key6 => selected.collapse(&6),
-        Key::Key7 => selected.collapse(&7),
-        Key::Key8 => selected.collapse(&8),
-        Key::Key9 => selected.collapse(&9),
-        _ => {}
+    if let Some(selected) = model.selected_mut() {
+        match key {
+            Key::Key1 => selected.collapse(&1),
+            Key::Key2 => selected.collapse(&2),
+            Key::Key3 => selected.collapse(&3),
+            Key::Key4 => selected.collapse(&4),
+            Key::Key5 => selected.collapse(&5),
+            Key::Key6 => selected.collapse(&6),
+            Key::Key7 => selected.collapse(&7),
+            Key::Key8 => selected.collapse(&8),
+            Key::Key9 => selected.collapse(&9),
+            _ => {}
+        };
     };
 }
 
@@ -85,6 +87,6 @@ fn update(_app: &App, _model: &mut Model, _update: Update) {
 fn view(app: &App, model: &Model, frame: Frame) {
     let draw = app.draw();
     draw.background().color(BLACK);
-    model.selected().draw(&draw.x_y(0.0, 0.0));
+    model.selected().expect("There should be a default").draw(&draw.x_y(0.0, 0.0));
     draw.to_frame(app, &frame).unwrap();
 }
