@@ -29,6 +29,14 @@ struct Model {
     selected: (usize, usize),
 }
 
+impl Model {
+    fn section(&mut self, x: usize, y: usize) -> MatrixViewMut<'_, Cell, Dyn, Dyn, Const<1>, Const<9>> {
+        let x = x - x%3;
+        let y = y - y%3;
+        self.grid.view_range_mut(x..x+3, y..y+3)
+    }
+}
+
 impl Selectable<Cell> for Model {
     type Selection = (usize, usize);
 
@@ -76,6 +84,7 @@ fn key_pressed(_app: &App, model: &mut Model, key: Key) {
 
 fn mouse_pressed(app: &App, model: &mut Model, button: MouseButton) {
     println!("{:?} at {}", button, app.mouse.position());
+    println!("{:?}", model.section(0,0).get((0,0)).unwrap());
     // todo!("Select cell");
 }
 
