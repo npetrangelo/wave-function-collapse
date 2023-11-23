@@ -96,6 +96,12 @@ fn update(_app: &App, _model: &mut Model, _update: Update) {
 fn view(app: &App, model: &Model, frame: Frame) {
     let draw = app.draw();
     draw.background().color(BLACK);
-    model.selected().expect("There should be a default").draw(&draw.x_y(0.0, 0.0));
+    for i in 0..9 {
+        for j in 0..9 {
+            let x = ((i as f32) - 4.0) * 60.0;
+            let y = ((j as f32) - 4.0) * 60.0;
+            model.grid.get((i, j)).unwrap().draw(&draw.x_y(x, y));
+        }
+    }
     draw.to_frame(app, &frame).unwrap();
 }
