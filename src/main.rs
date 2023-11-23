@@ -103,5 +103,12 @@ fn view(app: &App, model: &Model, frame: Frame) {
             model.grid.get((i, j)).unwrap().draw(&draw.x_y(x, -y));
         }
     }
+
+    for i in 0..4 {
+        let outer = Cell::SIZE*4.5;
+        let i = -outer + 3.0 * (i as f32) * Cell::SIZE;
+        draw.line().weight(5.0).color(WHITE).start(pt2(outer, i)).end(pt2(-outer, i));
+        draw.line().weight(5.0).color(WHITE).start(pt2(i, outer)).end(pt2(i, -outer));
+    }
     draw.to_frame(app, &frame).unwrap();
 }
