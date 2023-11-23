@@ -8,6 +8,8 @@ pub struct Cell {
 }
 
 impl Cell {
+    pub const SIZE: f32 = 60.0;
+
     fn new() -> Self {
         Self { entropy: BTreeSet::new() }
     }
@@ -27,7 +29,7 @@ impl Default for Cell {
 
 impl Drawable for Cell {
     fn draw(&self, draw: &Draw) {
-        let r = 30.0;
+        let r = Self::SIZE/2.0;
         let w = 1.0;
         // left
         draw.line().start(pt2(-r, -r)).end(pt2(-r, r)).weight(w).color(WHITE);
