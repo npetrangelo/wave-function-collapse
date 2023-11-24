@@ -83,14 +83,17 @@ fn key_pressed(_app: &App, model: &mut Model, key: Key) {
 }
 
 fn mouse_pressed(app: &App, model: &mut Model, button: MouseButton) {
-    println!("{:?} at {}", button, app.mouse.position());
-    println!("{:?}", model.section(0,0).get((0,0)).unwrap());
-    // todo!("Select cell");
+    let outer = Cell::SIZE*4.5;
+    let click = app.mouse.position();
+    let x = (click.x + outer) / Cell::SIZE;
+    let y = (-click.y + outer) / Cell::SIZE;
+    if x < 9.0 && y < 9.0 {
+        model.select((x as usize, y as usize));
+    }
 }
 
 fn update(_app: &App, _model: &mut Model, _update: Update) {
-    // todo!("Draw sudoku grid");
-    // todo!("Draw stateful sudoku grid");
+    // todo!("Execute sudoku rules (wave function collapse");
 }
 
 fn view(app: &App, model: &Model, frame: Frame) {
