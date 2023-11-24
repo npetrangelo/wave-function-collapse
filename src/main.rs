@@ -67,17 +67,20 @@ fn model(app: &App) -> Model {
 fn key_pressed(_app: &App, model: &mut Model, key: Key) {
     println!("{:?}", key);
     if let Some(selected) = model.selected_mut() {
-        match key {
-            Key::Key1 => selected.collapse(&1),
-            Key::Key2 => selected.collapse(&2),
-            Key::Key3 => selected.collapse(&3),
-            Key::Key4 => selected.collapse(&4),
-            Key::Key5 => selected.collapse(&5),
-            Key::Key6 => selected.collapse(&6),
-            Key::Key7 => selected.collapse(&7),
-            Key::Key8 => selected.collapse(&8),
-            Key::Key9 => selected.collapse(&9),
-            _ => {}
+        match match key {
+            Key::Key1 => selected.try_set(1),
+            Key::Key2 => selected.try_set(2),
+            Key::Key3 => selected.try_set(3),
+            Key::Key4 => selected.try_set(4),
+            Key::Key5 => selected.try_set(5),
+            Key::Key6 => selected.try_set(6),
+            Key::Key7 => selected.try_set(7),
+            Key::Key8 => selected.try_set(8),
+            Key::Key9 => selected.try_set(9),
+            _ => Err({})
+        } {
+            _Err => println!("Could not set value"),
+            _Ok => {},
         };
     };
 }
@@ -92,8 +95,15 @@ fn mouse_pressed(app: &App, model: &mut Model, button: MouseButton) {
     }
 }
 
-fn update(_app: &App, _model: &mut Model, _update: Update) {
+fn update(_app: &App, model: &mut Model, _update: Update) {
     // todo!("Execute sudoku rules (wave function collapse");
+    for mut cell in model.grid.iter_mut() {
+        if cell.cooldown > 0.0 {
+            cell.cooldown -= 0.05;
+        } else {
+            cell.cooldown = 0.0;
+        }
+    }
 }
 
 fn view(app: &App, model: &Model, frame: Frame) {
